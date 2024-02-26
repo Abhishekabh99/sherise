@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import 'ui/pages/login_page.dart';
-import 'ui/pages/splash_screen.dart';
+import 'package:sherise/controllers/home_controller.dart';
+import 'package:sherise/ui/pages/city_selection_page.dart';
+import 'package:sherise/ui/pages/home_page.dart';
+import 'package:sherise/ui/pages/login_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,13 +16,18 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'SheRise',
       theme: ThemeData(
-          // Define your app theme here
-          ),
-      initialRoute: '/splash', // Set initial route to splash screen
+        primarySwatch: Colors.blue,
+      ),
+      initialRoute: '/login',
       getPages: [
-        GetPage(name: '/splash', page: () => SplashScreen()),
         GetPage(name: '/login', page: () => LoginPage()),
-        // Define other routes here
+        GetPage(name: '/city_selection', page: () => CitySelectionPage()),
+        GetPage(
+            name: '/HomePage',
+            page: () => HomePage(),
+            binding: BindingsBuilder(() {
+              Get.lazyPut(() => HomeController());
+            }))
       ],
     );
   }
