@@ -1,5 +1,7 @@
+// home_page.dart
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sherise/constants/app_color.dart';
 import '../../controllers/home_controller.dart';
 
 class HomePage extends StatelessWidget {
@@ -8,6 +10,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.lightBlue,
       appBar: AppBar(
         title: Text('Home'),
       ),
@@ -23,18 +26,23 @@ class HomePage extends StatelessWidget {
               itemBuilder: (context, index) {
                 final service = _homeController.services[index];
                 return InkWell(
-                  onTap: () => _homeController.selectService(service),
+                  onTap: () {
+                    _homeController.selectService(service);
+                  },
                   child: Container(
                     width: 100,
                     margin: EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: _homeController.isSelected(service)
-                          ? Colors.blue
-                          : Colors.grey,
+                      color: service.selected
+                          ? AppColors.babyPink
+                          : AppColors.specialEmphasisColor,
                       borderRadius: BorderRadius.circular(10),
                     ),
                     alignment: Alignment.center,
-                    child: Text(service.name),
+                    child: Text(
+                      service.name,
+                      textAlign: TextAlign.center, // Center the text
+                    ),
                   ),
                 );
               },
