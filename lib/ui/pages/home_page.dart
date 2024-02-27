@@ -1,4 +1,3 @@
-// home_page.dart
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sherise/constants/app_color.dart';
@@ -10,8 +9,18 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFBDE0FE), // Light Blue
-
+      backgroundColor: AppColors.lightBlue,
+      appBar: AppBar(
+        title: Text(
+          'Service Selection',
+          style: TextStyle(
+            color: AppColors.navyBlue,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        backgroundColor: AppColors.lightBlue,
+        centerTitle: true,
+      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -32,16 +41,19 @@ class HomePage extends StatelessWidget {
                       width: 100,
                       margin: EdgeInsets.all(8),
                       decoration: BoxDecoration(
-                        color: service.selected
-                            ? Color(0xFFFFB6C1) // Baby Pink
-                            : Color(0xFFA2D2FF), // Baby Blue
+                        color: AppColors.specialEmphasisColor,
                         borderRadius: BorderRadius.circular(10),
+                        border: Border.all(
+                          color: AppColors.bubblegum.withOpacity(0.5),
+                          width: 2, // Increased border width
+                        ),
                       ),
                       alignment: Alignment.center,
                       child: Text(
                         service.name,
+                        textAlign: TextAlign.center,
                         style: TextStyle(
-                          color: Colors.black, // Navy Blue/Dark Gray
+                          color: AppColors.navyBlue,
                           fontSize: 14,
                         ),
                       ),
@@ -58,35 +70,78 @@ class HomePage extends StatelessWidget {
                 itemCount: _homeController.selectedContacts.length,
                 itemBuilder: (context, index) {
                   final contact = _homeController.selectedContacts[index];
-                  return ListTile(
-                    leading: CircleAvatar(
-                      // Placeholder for company or person photo
-                      backgroundColor: Colors.grey, // Dark Gray
-                      child: Icon(Icons.person),
-                    ),
-                    title: Text(
-                      contact.name,
-                      style: TextStyle(
-                        color: Colors.black, // Navy Blue/Dark Gray
-                        fontWeight: FontWeight.bold,
+                  return Container(
+                    margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                    padding: EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                        color: AppColors.navyBlue.withOpacity(0.5),
+                        width: 2, // Increased border width
                       ),
                     ),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Phone: ${contact.phoneNumber}',
-                          style: TextStyle(
-                            color: Colors.black, // Navy Blue/Dark Gray
+                    child: ListTile(
+                      leading: Container(
+                        width: 48,
+                        height: 48,
+                        decoration: BoxDecoration(
+                          color: AppColors.bubblegum,
+                          borderRadius: BorderRadius.circular(24),
+                          border: Border.all(
+                            color: AppColors.navyBlue.withOpacity(0.5),
+                            width: 2, // Increased border width
                           ),
                         ),
-                        Text(
-                          'WhatsApp: ${contact.whatsappNumber}',
-                          style: TextStyle(
-                            color: Colors.black, // Navy Blue/Dark Gray
-                          ),
+                        child: CircleAvatar(
+                          backgroundColor: Colors.grey,
+                          child: Icon(Icons.person),
                         ),
-                      ],
+                      ),
+                      title: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              contact.name,
+                              style: TextStyle(
+                                color: AppColors.navyBlue,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.phone,
+                                color: AppColors.navyBlue), // Change color here
+                            onPressed: () {
+                              // Implement phone call functionality
+                            },
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.message,
+                                color: AppColors.navyBlue), // Change color here
+                            onPressed: () {
+                              // Implement message functionality
+                            },
+                          ),
+                        ],
+                      ),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Phone: ${contact.phoneNumber}',
+                            style: TextStyle(
+                              color: AppColors.navyBlue,
+                            ),
+                          ),
+                          Text(
+                            'WhatsApp: ${contact.whatsappNumber}',
+                            style: TextStyle(
+                              color: AppColors.navyBlue,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 },

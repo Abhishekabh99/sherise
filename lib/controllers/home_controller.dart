@@ -51,7 +51,7 @@ class HomeController extends GetxController {
     for (int i = 1; i <= 10; i++) {
       selectedContacts.add(
         Contact(
-          name: 'Dummy Contact $i for Service $serviceId',
+          name: 'Service provider $i for Service $serviceId',
           phoneNumber: '1234567890',
           whatsappNumber: '1234567890',
           serviceId: serviceId,
