@@ -10,42 +10,45 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.lightBlue,
-      appBar: AppBar(
-        title: Text('Home'),
-      ),
+      backgroundColor: Color(0xFFBDE0FE), // Light Blue
+
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           // Service selection row
           SizedBox(
             height: 100,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: _homeController.services.length,
-              itemBuilder: (context, index) {
-                final service = _homeController.services[index];
-                return InkWell(
-                  onTap: () {
-                    _homeController.selectService(service);
-                  },
-                  child: Container(
-                    width: 100,
-                    margin: EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: service.selected
-                          ? AppColors.babyPink
-                          : AppColors.specialEmphasisColor,
-                      borderRadius: BorderRadius.circular(10),
+            child: Obx(
+              () => ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: _homeController.services.length,
+                itemBuilder: (context, index) {
+                  final service = _homeController.services[index];
+                  return InkWell(
+                    onTap: () {
+                      _homeController.selectService(service);
+                    },
+                    child: Container(
+                      width: 100,
+                      margin: EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: service.selected
+                            ? Color(0xFFFFB6C1) // Baby Pink
+                            : Color(0xFFA2D2FF), // Baby Blue
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      alignment: Alignment.center,
+                      child: Text(
+                        service.name,
+                        style: TextStyle(
+                          color: Colors.black, // Navy Blue/Dark Gray
+                          fontSize: 14,
+                        ),
+                      ),
                     ),
-                    alignment: Alignment.center,
-                    child: Text(
-                      service.name,
-                      textAlign: TextAlign.center, // Center the text
-                    ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
           ),
           // Vertical list view for contacts
@@ -58,15 +61,31 @@ class HomePage extends StatelessWidget {
                   return ListTile(
                     leading: CircleAvatar(
                       // Placeholder for company or person photo
-                      backgroundColor: Colors.grey,
+                      backgroundColor: Colors.grey, // Dark Gray
                       child: Icon(Icons.person),
                     ),
-                    title: Text(contact.name),
+                    title: Text(
+                      contact.name,
+                      style: TextStyle(
+                        color: Colors.black, // Navy Blue/Dark Gray
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Phone: ${contact.phoneNumber}'),
-                        Text('WhatsApp: ${contact.whatsappNumber}'),
+                        Text(
+                          'Phone: ${contact.phoneNumber}',
+                          style: TextStyle(
+                            color: Colors.black, // Navy Blue/Dark Gray
+                          ),
+                        ),
+                        Text(
+                          'WhatsApp: ${contact.whatsappNumber}',
+                          style: TextStyle(
+                            color: Colors.black, // Navy Blue/Dark Gray
+                          ),
+                        ),
                       ],
                     ),
                   );
