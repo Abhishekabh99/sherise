@@ -3,7 +3,12 @@ import 'package:get/get.dart';
 import 'package:sherise/constants/app_color.dart';
 import '../../controllers/home_controller.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   final HomeController _homeController = Get.put(HomeController());
 
   @override
@@ -12,7 +17,7 @@ class HomePage extends StatelessWidget {
       backgroundColor: AppColors.lightBlue,
       appBar: AppBar(
         title: Text(
-          'Service Selection',
+          'Find Your Service Provider',
           style: TextStyle(
             color: AppColors.navyBlue,
             fontWeight: FontWeight.bold,
@@ -20,6 +25,7 @@ class HomePage extends StatelessWidget {
         ),
         backgroundColor: AppColors.lightBlue,
         centerTitle: true,
+        elevation: 0, // No shadow
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -35,27 +41,42 @@ class HomePage extends StatelessWidget {
                   final service = _homeController.services[index];
                   return InkWell(
                     onTap: () {
-                      _homeController.selectService(service);
+                      setState(() {
+                        _homeController.selectService(service);
+                      });
                     },
                     child: Container(
-                      width: 100,
+                      width: MediaQuery.of(context).size.width * 0.2,
                       margin: EdgeInsets.all(8),
                       decoration: BoxDecoration(
-                        color: AppColors.specialEmphasisColor,
+                        color: service.selected
+                            ? AppColors.babyPink
+                            : AppColors.specialEmphasisColor,
                         borderRadius: BorderRadius.circular(10),
                         border: Border.all(
-                          color: AppColors.bubblegum.withOpacity(0.5),
-                          width: 2, // Increased border width
+                          color: AppColors.navyBlue.withOpacity(0.5),
+                          width: 2,
                         ),
                       ),
                       alignment: Alignment.center,
-                      child: Text(
-                        service.name,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: AppColors.navyBlue,
-                          fontSize: 14,
-                        ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            service.icon,
+                            color: AppColors.navyBlue,
+                            size: 24,
+                          ),
+                          SizedBox(height: 8),
+                          Text(
+                            service.name,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: AppColors.navyBlue,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   );
@@ -77,57 +98,32 @@ class HomePage extends StatelessWidget {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(
-                        color: AppColors.navyBlue.withOpacity(0.5),
-                        width: 2, // Increased border width
+                        color: AppColors.navyBlue.withOpacity(0.2),
+                        width: 2,
                       ),
                     ),
                     child: ListTile(
-                      leading: Container(
-                        width: 48,
-                        height: 48,
-                        decoration: BoxDecoration(
-                          color: AppColors.bubblegum,
-                          borderRadius: BorderRadius.circular(24),
-                          border: Border.all(
-                            color: AppColors.navyBlue.withOpacity(0.5),
-                            width: 2, // Increased border width
-                          ),
-                        ),
-                        child: CircleAvatar(
-                          backgroundColor: Colors.grey,
-                          child: Icon(Icons.person),
-                        ),
+                      contentPadding: EdgeInsets.zero, // Remove default padding
+                      leading: CircleAvatar(
+                        backgroundColor: Colors.grey,
+                        child: Icon(Icons.person, color: AppColors.navyBlue),
                       ),
-                      title: Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              contact.name,
-                              style: TextStyle(
-                                color: AppColors.navyBlue,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          IconButton(
-                            icon: Icon(Icons.phone,
-                                color: AppColors.navyBlue), // Change color here
-                            onPressed: () {
-                              // Implement phone call functionality
-                            },
-                          ),
-                          IconButton(
-                            icon: Icon(Icons.message,
-                                color: AppColors.navyBlue), // Change color here
-                            onPressed: () {
-                              // Implement message functionality
-                            },
-                          ),
-                        ],
+                      title: Text(
+                        contact.name,
+                        style: TextStyle(
+                          color: AppColors.navyBlue,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        maxLines: 2, // Limit to 2 lines
+                        overflow: TextOverflow
+                            .ellipsis, // Ellipsis if more than 2 lines
                       ),
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          SizedBox(
+                              height:
+                                  4), // Add some space between title and subtitle
                           Text(
                             'Phone: ${contact.phoneNumber}',
                             style: TextStyle(
@@ -139,6 +135,24 @@ class HomePage extends StatelessWidget {
                             style: TextStyle(
                               color: AppColors.navyBlue,
                             ),
+                          ),
+                        ],
+                      ),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            icon: Icon(Icons.phone, color: AppColors.bubblegum),
+                            onPressed: () {
+                              // Add phone call functionality
+                            },
+                          ),
+                          IconButton(
+                            icon:
+                                Icon(Icons.message, color: AppColors.bubblegum),
+                            onPressed: () {
+                              // Add message functionality
+                            },
                           ),
                         ],
                       ),

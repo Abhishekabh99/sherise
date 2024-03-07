@@ -44,6 +44,7 @@ class LoginPage extends StatelessWidget {
                     color: AppColors.navyBlue,
                   ),
                 ),
+                onChanged: _loginController.setEmail,
               ),
               SizedBox(height: 10),
               TextFormField(
@@ -55,22 +56,23 @@ class LoginPage extends StatelessWidget {
                     color: AppColors.navyBlue,
                   ),
                 ),
+                onChanged: _loginController.setPassword,
               ),
               SizedBox(height: 10),
-              Row(
-                children: [
-                  Checkbox(
-                    value: _loginController.rememberMe.value,
-                    onChanged: _loginController.toggleRememberMe,
-                  ),
-                  Text(
-                    'Remember Me',
-                    style: TextStyle(
-                      color: AppColors.navyBlue,
-                    ),
-                  ),
-                ],
-              ),
+              Obx(() => Row(
+                    children: [
+                      Checkbox(
+                        value: _loginController.rememberMe.value,
+                        onChanged: _loginController.toggleRememberMe,
+                      ),
+                      Text(
+                        'Remember Me',
+                        style: TextStyle(
+                          color: AppColors.navyBlue,
+                        ),
+                      ),
+                    ],
+                  )),
               SizedBox(height: 10),
               ElevatedButton(
                 onPressed: () {
@@ -107,7 +109,7 @@ class LoginPage extends StatelessWidget {
                     child: Text(
                       'Register',
                       style: TextStyle(
-                        color: AppColors.callToActionColor,
+                        color: AppColors.navyBlue,
                       ),
                     ),
                   ),
